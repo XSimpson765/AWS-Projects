@@ -1,1 +1,31 @@
-
+{
+  "name": "AWS Examples Dev Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/ruby:1": {},
+    "ghcr.io/devcontainers/features/terraform:1": {},
+    "ghcr.io/devcontainers/features/powershell:1": {}
+  },
+  "runArgs": ["--init"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "amazonwebservices.aws-toolkit-vscode",
+        "hashicorp.terraform",
+        "ms-python.python",
+        "rebornix.ruby",
+        "ms-vscode.powershell"
+      ]
+    }
+  },
+  "postCreateCommand": "pipx install aws-sam-cli && npm install -g aws-cdk && echo '✅ Environment ready: AWS CLI, SAM CLI, Terraform, Ruby, PowerShell, and CDK installed.'",
+  "remoteUser": "vscode",
+  "containerEnv": {
+    "AWS_DEFAULT_REGION": "us-east-1",
+    "AWS_PAGER": ""
+  }
+}
