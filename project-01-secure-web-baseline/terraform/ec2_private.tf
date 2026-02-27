@@ -4,14 +4,28 @@ resource "aws_security_group" "private_ec2" {
   description = "Private EC2 SG"
   vpc_id      = aws_vpc.this.id
 
-  # Allow HTTP from ALB security group only
-  ingress {
-    description              = "Allow HTTP from ALB"
-    from_port                = 80
-    to_port                  = 80
-    protocol                 = "tcp"
-    source_security_group_id = aws_security_group.alb.id
+  egress {
+    description = "All egress"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = merge(local.tags, {
+    Name = "${var.project_name}-private-ec2-sg"
+  })
+}
+
+# Allow HTTP from ALB to Private EC2
+resource "aws_security_group_rule" "allow_alb_http" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.private_ec2.id
+  source_security_group_id = aws_security_group.alb.id
+}
 
   egress {
     description = "All egress"
