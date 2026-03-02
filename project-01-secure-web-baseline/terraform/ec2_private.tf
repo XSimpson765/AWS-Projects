@@ -1,21 +1,58 @@
 ############################################
-# Security Group for ALB (Public)
+# ec2_private.tf
+# - Private EC2 (no public IP)
+# - SSM role/profile
+# - Private EC2 security group (NO inline ingress)
+# - user_data installs nginx
 ############################################
-resource "aws_security_group" "alb" {
-  name        = "${var.project_name}-alb-sg"
-  description = "Allow HTTP from internet"
+
+# Get latest Amazon Linux 2023 AMI
+data "aws_ami" "al2023" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-x86_64*"]
+  }
+}
+
+# IAM role for SSM access (managed policy)
+resource "aws_iam_role" "ec2_ssm_role" {
+  name = "${var.project_name}-ec2-ssm-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect    = "Allow",
+      Principal = { Service = "ec2.amazonaws.com" },
+      Action    = "sts:AssumeRole"
+    }]
+  })
+
+  tags = local.tags
+}
+
+resource "aws_iam_role_policy_attachment" "ssm_managed" {
+  role       = aws_iam_role.ec2_ssm_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "${var.project_name}-ec2-profile"
+  role = aws_iam_role.ec2_ssm_role.name
+}
+
+# Security group for the private EC2
+# IMPORTANT: No inline ingress here.
+# The ALB -> EC2:80 ingress rule is defined ONLY in alb.tf
+resource "aws_security_group" "private_ec2" {
+  name        = "${var.project_name}-private-ec2-sg"
+  description = "Private EC2 SG"
   vpc_id      = aws_vpc.this.id
 
-  ingress {
-    description = "Allow HTTP from Internet"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
-    description = "Allow all outbound"
+    description = "All egress"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -23,77 +60,34 @@ resource "aws_security_group" "alb" {
   }
 
   tags = merge(local.tags, {
-    Name = "${var.project_name}-alb-sg"
+    Name = "${var.project_name}-private-ec2-sg"
   })
 }
 
-############################################
-# Allow ALB to talk to EC2 (ONLY RULE)
-############################################
-resource "aws_security_group_rule" "ec2_allow_alb" {
-  type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.private_ec2.id
-  source_security_group_id = aws_security_group.alb.id
-}
+resource "aws_instance" "private" {
+  ami                    = data.aws_ami.al2023.id
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.private_a.id
+  vpc_security_group_ids = [aws_security_group.private_ec2.id]
 
-############################################
-# Target Group
-############################################
-resource "aws_lb_target_group" "this" {
-  name     = "${var.project_name}-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.this.id
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+  associate_public_ip_address = false
 
-  health_check {
-    path                = "/"
-    matcher             = "200"
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    timeout             = 5
-    interval            = 30
-  }
+  # Automatic nginx setup (serves the page the ALB health check hits)
+  user_data = <<-EOF
+              #!/bin/bash
+              set -e
 
-  tags = local.tags
-}
+              dnf -y update
+              dnf -y install nginx
 
-############################################
-# Application Load Balancer
-############################################
-resource "aws_lb" "this" {
-  name               = "${var.project_name}-alb"
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb.id]
-  subnets = [
-    aws_subnet.public_a.id,
-    aws_subnet.public_b.id
-  ]
+              systemctl enable nginx
+              systemctl start nginx
 
-  tags = local.tags
-}
+              echo "Secure Web Baseline - Private EC2 via SSM (user_data automated)" > /usr/share/nginx/html/index.html
+              EOF
 
-############################################
-# Listener
-############################################
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.this.arn
-  port              = 80
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.this.arn
-  }
-}
-
-############################################
-# Attach EC2 to Target Group
-############################################
-resource "aws_lb_target_group_attachment" "this" {
-  target_group_arn = aws_lb_target_group.this.arn
-  target_id        = aws_instance.private.id
-  port             = 80
+  tags = merge(local.tags, {
+    Name = "${var.project_name}-private-ec2"
+  })
 }

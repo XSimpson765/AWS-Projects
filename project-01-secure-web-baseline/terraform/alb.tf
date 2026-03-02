@@ -1,6 +1,11 @@
 ############################################
-# Security Group for ALB (Public)
+# alb.tf
+# - ALB security group (public HTTP)
+# - ONLY ONE rule allowing ALB -> EC2:80
+# - Target group + ALB + Listener + Attachment
 ############################################
+
+# Security Group for ALB (Public)
 resource "aws_security_group" "alb" {
   name        = "${var.project_name}-alb-sg"
   description = "Allow HTTP from internet"
@@ -27,9 +32,7 @@ resource "aws_security_group" "alb" {
   })
 }
 
-############################################
-# Allow ALB to talk to EC2 (ONLY RULE)
-############################################
+# Allow ALB to talk to EC2 on port 80 (THIS IS THE ONLY ALB->EC2 RULE)
 resource "aws_security_group_rule" "ec2_allow_alb" {
   type                     = "ingress"
   from_port                = 80
@@ -39,9 +42,7 @@ resource "aws_security_group_rule" "ec2_allow_alb" {
   source_security_group_id = aws_security_group.alb.id
 }
 
-############################################
 # Target Group
-############################################
 resource "aws_lb_target_group" "this" {
   name     = "${var.project_name}-tg"
   port     = 80
@@ -60,13 +61,12 @@ resource "aws_lb_target_group" "this" {
   tags = local.tags
 }
 
-############################################
 # Application Load Balancer
-############################################
 resource "aws_lb" "this" {
   name               = "${var.project_name}-alb"
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
+
   subnets = [
     aws_subnet.public_a.id,
     aws_subnet.public_b.id
@@ -75,9 +75,7 @@ resource "aws_lb" "this" {
   tags = local.tags
 }
 
-############################################
 # Listener
-############################################
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.this.arn
   port              = 80
@@ -89,11 +87,13 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-############################################
 # Attach EC2 to Target Group
-############################################
 resource "aws_lb_target_group_attachment" "this" {
   target_group_arn = aws_lb_target_group.this.arn
   target_id        = aws_instance.private.id
   port             = 80
+
+  depends_on = [
+    aws_security_group_rule.ec2_allow_alb
+  ]
 }
