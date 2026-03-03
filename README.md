@@ -1,71 +1,86 @@
-# AWS Projects Portfolio
+# AWS Cloud Engineering Projects
 
-This repository contains hands-on AWS infrastructure projects built using Terraform.
+This repository contains hands-on AWS infrastructure projects built using **Terraform**.
 
-Each project demonstrates production-grade cloud engineering practices including Infrastructure as Code (Terraform), secure network architecture, and real-world DevOps patterns.
+The goal of these projects is to demonstrate real-world **cloud engineering practices**, including Infrastructure as Code, secure AWS networking architecture, monitoring, and production-style Terraform project structure.
 
 ---
 
 ## Projects
 
-### 1. Secure Web Baseline ([project-01-secure-web-baseline](project-01-secure-web-baseline))
+### 1. Secure Web Baseline
 
-- Custom VPC
-- Public Application Load Balancer
-- Private EC2 instance
-- NAT Gateway for outbound access
-- Remote Terraform backend (S3 + DynamoDB)
-- Security group hardening
-- Private subnet architecture
+**Directory:** `project-01-secure-web-baseline`
 
-This project demonstrates foundational AWS production design and secure network segmentation.
+Architecture:
 
----
+![Architecture](project-01-secure-web-baseline/project-01-architecture.png.drawio.png)
 
-### 2. Terraform Remote Backend ([project-02-terraform-backend](project-02-terraform-backend))
+**Key components**
 
-- S3 bucket for Terraform state storage
-- DynamoDB table for state locking
-- Server-side encryption enabled
-- Versioning enabled
-- Public access blocked
-- Production-ready remote backend configuration
+* Custom VPC
+* Public Application Load Balancer
+* Private EC2 instance running Nginx
+* NAT Gateway for outbound access
+* Secure public/private subnet architecture
+* Hardened security groups
 
-This project demonstrates enterprise Terraform state management best practices.
+This project demonstrates **secure AWS network design and load-balanced web infrastructure**.
 
 ---
 
-### 3. Production Web Platform ([project-03-prod-web-platform](project-03-prod-web-platform))
+### 2. Terraform Remote Backend
 
-- Structured multi-file Terraform architecture
-- Custom VPC with public and private subnets
-- Internet Gateway + NAT Gateway
-- Public Application Load Balancer
-- Private EC2 instance running Nginx
-- IAM role attached to EC2
-- CloudWatch monitoring and alarms
-- Secure security group configuration
+**Directory:** `project-02-terraform-backend`
 
-This project simulates a real-world cloud engineering deployment with production-style structure and observability.
+**Key components**
+
+* S3 bucket for Terraform state storage
+* DynamoDB table for Terraform state locking
+* Server-side encryption enabled
+* Versioning enabled
+* Public access blocked
+
+This project demonstrates **production-grade Terraform state management best practices**.
+
+---
+
+### 3. Production Web Platform
+
+**Directory:** `project-03-prod-web-platform`
+
+**Key components**
+
+* Multi-file Terraform architecture
+* Custom VPC with public and private subnets
+* Internet Gateway + NAT Gateway
+* Application Load Balancer
+* Private EC2 instance running Nginx
+* IAM role attached to EC2
+* CloudWatch monitoring and alarms
+* Secure security group configuration
+
+This project simulates a **real-world cloud infrastructure deployment with monitoring and observability**.
 
 ---
 
 ## Skills Demonstrated
 
-- Terraform Infrastructure as Code
-- AWS VPC architecture design
-- Public vs Private subnet segmentation
-- Application Load Balancer configuration
-- NAT Gateway implementation
-- IAM role-based access control
-- CloudWatch monitoring and alarms
-- Secure Terraform remote backend setup
-- Production-ready AWS design principles
+* Terraform Infrastructure as Code
+* AWS VPC architecture design
+* Public vs Private subnet segmentation
+* Application Load Balancer configuration
+* NAT Gateway implementation
+* IAM role-based access control
+* CloudWatch monitoring and alarms
+* Secure Terraform remote backend setup
+* Production-style AWS infrastructure design
 
 ---
 
 ## Author
 
-Xavier Simpson  
-AWS Certified Solutions Architect – Associate  
-GitHub: XSimpson765
+**Xavier Simpson**
+AWS Certified Solutions Architect – Associate
+
+GitHub: https://github.com/XSimpson765
