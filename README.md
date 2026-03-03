@@ -2,13 +2,13 @@
 
 This repository contains hands-on AWS infrastructure projects built using Terraform.
 
-Each project is designed to demonstrate production-grade cloud engineering practices, Infrastructure as Code (IaC), secure network design, and real-world DevOps patterns.
+Each project demonstrates production-grade cloud engineering practices including Infrastructure as Code (Terraform), secure network architecture, and real-world DevOps patterns.
 
 ---
 
 ## Projects
 
-### 1. Secure Web Baseline (project-01-secure-web-baseline)
+### 1. Secure Web Baseline ([project-01-secure-web-baseline](project-01-secure-web-baseline))
 
 - Custom VPC
 - Public Application Load Balancer
@@ -22,7 +22,7 @@ This project demonstrates foundational AWS production design and secure network 
 
 ---
 
-### 2. Terraform Remote Backend (project-02-terraform-backend)
+### 2. Terraform Remote Backend ([project-02-terraform-backend](project-02-terraform-backend))
 
 - S3 bucket for Terraform state storage
 - DynamoDB table for state locking
@@ -35,7 +35,7 @@ This project demonstrates enterprise Terraform state management best practices.
 
 ---
 
-### 3. Production Web Platform (project-03-prod-web-platform)
+### 3. Production Web Platform ([project-03-prod-web-platform](project-03-prod-web-platform))
 
 - Structured multi-file Terraform architecture
 - Custom VPC with public and private subnets
