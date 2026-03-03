@@ -70,7 +70,7 @@ resource "aws_instance" "private" {
   subnet_id              = aws_subnet.private_a.id
   vpc_security_group_ids = [aws_security_group.private_ec2.id]
 
-  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+  iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name
   associate_public_ip_address = false
 
   # Automatic nginx setup (serves the page the ALB health check hits)
