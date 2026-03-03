@@ -20,7 +20,7 @@ cat > /usr/share/nginx/html/index.html <<EOF
 <html>
   <head><title>Project 03 - Prod Web Platform</title></head>
   <body>
-    <h1>✅ Project 03 Phase 1 is live</h1>
+    <h1>✅ Project 03 Phase 2 CI/CD Ready</h1>
     <p><b>Instance:</b> ${INSTANCE_ID}</p>
     <p><b>AZ:</b> ${AZ}</p>
   </body>
