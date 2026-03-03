@@ -52,3 +52,49 @@ This prevents:
 ## Verification
 
 ### 1. ALB Response
+
+
+Instance is private-only.
+
+---
+
+## Key Terraform Resources
+
+- aws_vpc
+- aws_subnet
+- aws_nat_gateway
+- aws_lb
+- aws_lb_target_group
+- aws_instance
+- aws_security_group
+- aws_s3_bucket
+- aws_dynamodb_table
+
+---
+
+## What This Demonstrates
+
+- Infrastructure as Code (Terraform)
+- Network segmentation (public vs private)
+- Secure ALB architecture
+- Remote backend best practices
+- Cloud production design fundamentals
+
+---
+
+## Future Enhancements
+
+- HTTPS with ACM certificate
+- Auto Scaling Group
+- WAF integration
+- CloudWatch alarms
+- ALB access logging
+- CI/CD pipeline integration
+
+---
+
+## Author
+
+Xavier Simpson  
+AWS Certified Solutions Architect – Associate  
+GitHub: XSimpson765
