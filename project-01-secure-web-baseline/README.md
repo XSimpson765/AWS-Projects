@@ -20,7 +20,7 @@ The goal was to deploy a private EC2 instance behind a public Application Load B
 - Private EC2 instance running Nginx
 - S3 Remote Terraform Backend
 - DynamoDB State Locking
-- ![Architecture Diagram](project-01-architecture.png)
+- ![Architecture Diagram](project-01-architecture.png.drawio.png)
 
 ---
 
