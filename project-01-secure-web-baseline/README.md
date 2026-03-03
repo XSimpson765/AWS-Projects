@@ -13,6 +13,7 @@ The goal was to deploy a private EC2 instance behind a public Application Load B
 - Custom VPC (us-east-1)
 - 2 Public Subnets (for ALB + NAT)
 - 2 Private Subnets (for EC2)
+- Internet Gateway
 - NAT Gateway for outbound internet access
 - Application Load Balancer (public)
 - Target Group + Listener (HTTP:80)
@@ -24,13 +25,14 @@ The goal was to deploy a private EC2 instance behind a public Application Load B
 
 ## Security Controls
 
-- EC2 instance has **no public IP**
-- Security Group allows traffic:
+- EC2 instance has no public IP
+- Security Group rules:
   - Internet → ALB (port 80)
   - ALB → EC2 (port 80 only)
+- No inbound SSH exposed to the internet
 - Remote Terraform state stored in encrypted S3
 - State locking enforced via DynamoDB
-- No SSH exposed to the internet
+- Public access blocked on S3 backend bucket
 
 ---
 
@@ -40,21 +42,52 @@ Remote backend implemented using:
 
 - S3 bucket for state storage
 - Server-side encryption enabled
+- Versioning enabled
 - DynamoDB table for state locking
 
 This prevents:
+
 - State corruption
 - Concurrent apply conflicts
 - Local state exposure
+- Accidental state deletion
+
+---
+
+## Deployment Workflow
+
+Initialize Terraform:
+
+terraform init
+
+Validate configuration:
+
+terraform validate
+
+Review execution plan:
+
+terraform plan
+
+Apply infrastructure:
+
+terraform apply
+
+Destroy resources (when finished):
+
+terraform destroy
 
 ---
 
 ## Verification
 
-### 1. ALB Response
+1. Confirm ALB DNS name resolves in browser.
+2. Verify Nginx default page loads through ALB.
+3. Confirm EC2 instance has no public IP.
+4. Confirm NAT Gateway allows outbound updates.
+5. Confirm remote state stored in S3.
+6. Confirm DynamoDB lock entry created during apply.
 
-
-Instance is private-only.
+Instance remains private-only behind the load balancer.
 
 ---
 
@@ -62,9 +95,12 @@ Instance is private-only.
 
 - aws_vpc
 - aws_subnet
+- aws_internet_gateway
 - aws_nat_gateway
+- aws_route_table
 - aws_lb
 - aws_lb_target_group
+- aws_lb_listener
 - aws_instance
 - aws_security_group
 - aws_s3_bucket
@@ -75,26 +111,28 @@ Instance is private-only.
 ## What This Demonstrates
 
 - Infrastructure as Code (Terraform)
-- Network segmentation (public vs private)
-- Secure ALB architecture
-- Remote backend best practices
-- Cloud production design fundamentals
+- Secure VPC network segmentation (public vs private)
+- ALB-based production web architecture
+- Private EC2 deployment pattern
+- Remote backend implementation
+- Cloud security best practices
+- Production-grade AWS design fundamentals
 
 ---
 
 ## Future Enhancements
 
 - HTTPS with ACM certificate
-- Auto Scaling Group
-- WAF integration
-- CloudWatch alarms
-- ALB access logging
+- Auto Scaling Group integration
+- AWS WAF integration
+- CloudWatch alarms and monitoring
+- ALB access logging to S3
 - CI/CD pipeline integration
 
 ---
 
 ## Author
 
-Xavier Simpson  
-AWS Certified Solutions Architect – Associate  
+Xavier Simpson
+AWS Certified Solutions Architect – Associate
 GitHub: XSimpson765

@@ -47,6 +47,15 @@ This project solves those problems by:
 
 Example backend configuration:
 
+terraform {
+  backend "s3" {
+    bucket         = "your-terraform-state-bucket-name"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-state-locks"
+    encrypt        = true
+  }
+}
 
 ---
 
@@ -56,6 +65,7 @@ Example backend configuration:
 - Used for state locking
 - Prevents simultaneous terraform apply operations
 - Ensures safe concurrent infrastructure deployments
+- On-demand billing mode enabled
 
 ---
 
@@ -63,6 +73,23 @@ Example backend configuration:
 
 Initialize backend:
 
+terraform init
+
+Validate configuration:
+
+terraform validate
+
+Review execution plan:
+
+terraform plan
+
+Apply infrastructure:
+
+terraform apply
+
+Destroy resources (if needed):
+
+terraform destroy
 
 ---
 
@@ -70,6 +97,8 @@ Initialize backend:
 
 - Verified state file stored in S3
 - Confirmed versioning enabled
+- Confirmed encryption enabled
+- Confirmed public access blocked
 - Confirmed DynamoDB lock entry created during apply
 - Verified state lock released after completion
 - Confirmed backend reinitialization works across sessions
