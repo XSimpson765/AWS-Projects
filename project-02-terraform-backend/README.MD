@@ -113,3 +113,13 @@ terraform destroy
 - Production-grade IaC workflow
 - Collaborative infrastructure design principles
 - Infrastructure lifecycle management
+
+## Documentation
+
+Relevant AWS documentation for services used in this project:
+
+- Terraform S3 Backend: https://developer.hashicorp.com/terraform/language/settings/backends/s3
+- Amazon S3: https://docs.aws.amazon.com/s3/
+- DynamoDB: https://docs.aws.amazon.com/dynamodb/
+- DynamoDB State Locking (Terraform): https://developer.hashicorp.com/terraform/language/settings/backends/s3#dynamodb-state-locking
+- S3 Security Best Practices: https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html
