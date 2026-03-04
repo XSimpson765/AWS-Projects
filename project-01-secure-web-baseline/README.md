@@ -143,6 +143,12 @@ GitHub: XSimpson765
 Additional documentation for this project:
 
 - Architecture Diagram: [View Architecture](project-01-architecture.png.drawio.png)
-- Deployment Guide: [Runbook](runbook.md)
 
-These documents explain the infrastructure layout and operational steps used in this environment.
+Relevant AWS documentation for services used in this project:
+
+- Amazon VPC: https://docs.aws.amazon.com/vpc/
+- EC2: https://docs.aws.amazon.com/ec2/
+- Application Load Balancer: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/
+- NAT Gateway: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
+- IAM Roles: https://docs.aws.amazon.com/IAM/
+- CloudWatch Monitoring: https://docs.aws.amazon.com/cloudwatch/
