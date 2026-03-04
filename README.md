@@ -49,6 +49,10 @@ This project demonstrates **production-grade Terraform state management best pra
 
 **Directory:** `project-03-prod-web-platform`
 
+Architecture:
+
+
+
 **Key components**
 
 * Multi-file Terraform architecture
