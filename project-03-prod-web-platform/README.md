@@ -151,3 +151,18 @@ terraform destroy
 Xavier Simpson
 AWS Certified Solutions Architect – Associate
 GitHub: XSimpson765
+
+## Documentation
+
+Architecture Diagram:
+
+- View Architecture: [Architecture Diagram](project-03-architecture.png)
+
+Relevant AWS documentation for services used in this project:
+
+- Amazon VPC: https://docs.aws.amazon.com/vpc/
+- EC2: https://docs.aws.amazon.com/ec2/
+- Application Load Balancer: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/
+- NAT Gateway: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html
+- IAM Roles: https://docs.aws.amazon.com/IAM/
+- CloudWatch Monitoring: https://docs.aws.amazon.com/cloudwatch/
