@@ -51,7 +51,7 @@ This project demonstrates **production-grade Terraform state management best pra
 
 Architecture:
 
-![Architecture](project-03-architecture.png)
+![Architecture](project-03-prod-web-platform/project-03-architecture.png)
 
 **Key components**
 
