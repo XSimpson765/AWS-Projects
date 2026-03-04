@@ -137,3 +137,12 @@ Instance remains private-only behind the load balancer.
 Xavier Simpson
 AWS Certified Solutions Architect – Associate
 GitHub: XSimpson765
+
+## Documentation
+
+Additional documentation for this project:
+
+- Architecture Diagram: [View Architecture](project-01-architecture.png.drawio.png)
+- Deployment Guide: [Runbook](runbook.md)
+
+These documents explain the infrastructure layout and operational steps used in this environment.
