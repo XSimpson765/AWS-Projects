@@ -23,6 +23,7 @@ This project builds upon previous foundations and introduces production-ready ar
 - IAM Role attached to EC2
 - CloudWatch monitoring and alarms
 - Modular Terraform file structure
+- ![Architecture](project-03-architecture.png)
 
 ---
 
