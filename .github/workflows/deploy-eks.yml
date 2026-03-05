@@ -31,7 +31,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t $ECR_URI:latest .
+        docker build -t $ECR_URI:latest -f project4-cloud-ops-platform/app/Dockerfile project4-cloud-ops-platform/app
 
     - name: Push Docker image
       run: |
