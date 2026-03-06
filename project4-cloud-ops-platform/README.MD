@@ -8,33 +8,22 @@ The deployment is exposed publicly through an **AWS Application Load Balancer**.
 
 # Architecture
 
-```
-Developer Push
-      │
-      ▼
-GitHub Repository
-      │
-      ▼
-GitHub Actions CI/CD Pipeline
-      │
-      ├── Build Docker Image
-      ├── Tag with Commit SHA
-      ├── Push to Amazon ECR
-      │
-      ▼
-Amazon ECR (Container Registry)
-      │
-      ▼
-Amazon EKS (Kubernetes Cluster)
-      │
-      ▼
-Kubernetes Deployment + Service
-      │
-      ▼
-AWS Load Balancer
-      │
-      ▼
-Public Web Application
+```mermaid
+sequenceDiagram
+    participant Developer
+    participant GitHub
+    participant GitHub_Actions as GitHub Actions
+    participant Amazon_ECR as Amazon ECR
+    participant Amazon_EKS as Amazon EKS
+
+    Developer->>GitHub: git push (main)
+    GitHub->>GitHub_Actions: trigger workflow
+
+    GitHub_Actions->>GitHub_Actions: docker build + tag (sha, latest)
+    GitHub_Actions->>Amazon_ECR: docker push
+
+    GitHub_Actions->>Amazon_EKS: kubectl apply + set image
+    Amazon_EKS->>Amazon_EKS: rollout update (new pods)
 ```
 
 ---
@@ -215,5 +204,5 @@ This project demonstrates practical experience with:
 
 **Xavier Simpson**
 
-Cloud / DevOps Engineer Path
+Cloud / DevOps Engineer Path  
 AWS Certified Solutions Architect – Associate
