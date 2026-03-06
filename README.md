@@ -82,6 +82,21 @@ This project simulates a **real-world cloud infrastructure deployment with monit
 
 ---
 
+### 4. Cloud Ops Platform (CI/CD → ECR → EKS)
+
+**Directory:** `project4-cloud-ops-platform`
+
+**What it is:** A production-style CI/CD pipeline that builds a Docker image, pushes it to Amazon ECR, and deploys it to Amazon EKS using GitHub Actions (rolling updates).
+
+**Key components**
+* Dockerized NGINX web app (`app/`)
+* GitHub Actions workflow (`.github/workflows/deploy-eks.yml`)
+* Amazon ECR repository (image registry)
+* Amazon EKS deployment + service (`kubernetes/`)
+* AWS Load Balancer public endpoint
+
+This project demonstrates **real-world DevOps workflow automation**: build → push → deploy with Kubernetes rolling updates.
+
 ## Author
 
 **Xavier Simpson**
