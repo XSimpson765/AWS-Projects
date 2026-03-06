@@ -88,6 +88,10 @@ This project simulates a **real-world cloud infrastructure deployment with monit
 
 **What it is:** A production-style CI/CD pipeline that builds a Docker image, pushes it to Amazon ECR, and deploys it to Amazon EKS using GitHub Actions (rolling updates).
 
+Pipeline flow:
+
+GitHub → GitHub Actions → Docker → Amazon ECR → Amazon EKS → AWS Load Balancer
+
 **Key components**
 * Dockerized NGINX web app (`app/`)
 * GitHub Actions workflow (`.github/workflows/deploy-eks.yml`)
