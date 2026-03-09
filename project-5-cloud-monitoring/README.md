@@ -8,13 +8,17 @@ The environment provisions an EC2 instance and implements monitoring using **Ama
 
 # Architecture
 
-EC2 Instance
-↓
-CloudWatch Metrics
-↓
-CloudWatch Alarm (CPU Utilization > 70%)
-↓
-SNS Topic Alert
+```mermaid
+flowchart LR
+
+EC2[EC2 Instance] --> Metrics[CloudWatch Metrics]
+
+Metrics --> Alarm[CloudWatch Alarm]
+
+Alarm --> SNS[SNS Topic]
+
+SNS --> Alert[Monitoring Alert Triggered]
+```
 
 ---
 
