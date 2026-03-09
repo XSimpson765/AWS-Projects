@@ -16,3 +16,8 @@ resource "aws_instance" "monitoring_instance" {
     Name = var.project_name
   }
 }
+
+module "monitoring" {
+  source      = "./monitoring"
+  instance_id = aws_instance.monitoring_instance.id
+}
