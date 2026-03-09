@@ -13,6 +13,6 @@ resource "aws_instance" "monitoring_instance" {
   instance_type = var.instance_type
 
   tags = {
-    Name = var.instance_name
+    Name = var.project_name
   }
 }
