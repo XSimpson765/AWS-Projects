@@ -127,6 +127,11 @@ SNS --> Alert[Monitoring Alert Triggered]
 
 This project demonstrates **automated infrastructure monitoring and alerting using Terraform and AWS observability services**.
 
+## Skills Demonstrated
+
+* AWS CloudWatch monitoring and alert automation
+* AWS SNS notification infrastructure
+
 ## Author
 
 **Xavier Simpson**
