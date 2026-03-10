@@ -131,6 +131,24 @@ This project demonstrates **automated infrastructure monitoring and alerting usi
 
 * AWS CloudWatch monitoring and alert automation
 * AWS SNS notification infrastructure
+=======
+### 6. Terraform Infrastructure CI/CD
+
+Directory: `project-06-terraform-cicd`
+
+This project demonstrates automated Terraform infrastructure deployment using GitHub Actions CI/CD pipelines.
+
+Pipeline flow:
+
+Developer → GitHub → GitHub Actions → Terraform → AWS Infrastructure
+
+Key components
+
+• GitHub Actions CI/CD pipeline  
+• Terraform Infrastructure as Code  
+• Automated Terraform plan and apply workflow  
+• AWS infrastructure deployment automation
+>>>>>>> 8a1fb3f (p6)
 
 ## Author
 
