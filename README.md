@@ -131,7 +131,7 @@ This project demonstrates **automated infrastructure monitoring and alerting usi
 
 * AWS CloudWatch monitoring and alert automation
 * AWS SNS notification infrastructure
-=======
+
 ### 6. Terraform Infrastructure CI/CD
 
 Directory: `project-06-terraform-cicd`
