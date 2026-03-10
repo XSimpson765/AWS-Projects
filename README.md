@@ -148,7 +148,6 @@ Key components
 • Terraform Infrastructure as Code  
 • Automated Terraform plan and apply workflow  
 • AWS infrastructure deployment automation
->>>>>>> 8a1fb3f (p6)
 
 ## Author
 
