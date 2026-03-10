@@ -155,7 +155,6 @@ resource "aws_security_group" "alb_sg" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "HTTP from internet"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -168,19 +167,13 @@ resource "aws_security_group" "alb_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = "${var.project_name}-alb-sg"
-  }
 }
 
 resource "aws_security_group" "ec2_sg" {
-  name        = "${var.project_name}-ec2-sg"
-  description = "Allow HTTP from ALB"
-  vpc_id      = aws_vpc.main.id
+  name   = "${var.project_name}-ec2-sg"
+  vpc_id = aws_vpc.main.id
 
   ingress {
-    description     = "HTTP from ALB"
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
@@ -193,10 +186,6 @@ resource "aws_security_group" "ec2_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = "${var.project_name}-ec2-sg"
-  }
 }
 
 resource "aws_lb" "app_alb" {
@@ -205,10 +194,6 @@ resource "aws_lb" "app_alb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = [aws_subnet.public_1.id, aws_subnet.public_2.id]
-
-  tags = {
-    Name = "${var.project_name}-alb"
-  }
 }
 
 resource "aws_lb_target_group" "app_tg" {
@@ -218,17 +203,8 @@ resource "aws_lb_target_group" "app_tg" {
   vpc_id   = aws_vpc.main.id
 
   health_check {
-    path                = "/"
-    protocol            = "HTTP"
-    matcher             = "200"
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    interval            = 30
-    timeout             = 5
-  }
-
-  tags = {
-    Name = "${var.project_name}-tg"
+    path    = "/"
+    matcher = "200"
   }
 }
 
@@ -251,37 +227,26 @@ resource "aws_launch_template" "app_lt" {
   user_data = base64encode(file("${path.module}/user-data.sh"))
 
   network_interfaces {
-    associate_public_ip_address = false
+    associate_public_ip_address = true
     security_groups             = [aws_security_group.ec2_sg.id]
-  }
-
-  tag_specifications {
-    resource_type = "instance"
-
-    tags = {
-      Name = "${var.project_name}-app-instance"
-    }
   }
 }
 
 resource "aws_autoscaling_group" "app_asg" {
-  name                      = "p7-app-asg"
-  desired_capacity          = 2
-  min_size                  = 2
-  max_size                  = 2
-  vpc_zone_identifier       = [aws_subnet.private_app_1.id, aws_subnet.private_app_2.id]
-  target_group_arns         = [aws_lb_target_group.app_tg.arn]
-  health_check_type         = "ELB"
-  health_check_grace_period = 120
+  name                = "p7-app-asg"
+  desired_capacity    = 2
+  min_size            = 2
+  max_size            = 2
+
+  vpc_zone_identifier = [
+    aws_subnet.public_1.id,
+    aws_subnet.public_2.id
+  ]
+
+  target_group_arns = [aws_lb_target_group.app_tg.arn]
 
   launch_template {
     id      = aws_launch_template.app_lt.id
     version = "$Latest"
-  }
-
-  tag {
-    key                 = "Name"
-    value               = "${var.project_name}-asg-instance"
-    propagate_at_launch = true
   }
 }
