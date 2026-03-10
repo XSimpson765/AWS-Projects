@@ -101,6 +101,32 @@ GitHub → GitHub Actions → Docker → Amazon ECR → Amazon EKS → AWS Load 
 
 This project demonstrates **real-world DevOps workflow automation**: build → push → deploy with Kubernetes rolling updates.
 
+### 5. Cloud Monitoring Infrastructure (Terraform)
+
+**Directory:** `project-5-cloud-monitoring`
+
+Architecture:
+
+```mermaid
+flowchart LR
+
+EC2[EC2 Instance] --> Metrics[CloudWatch Metrics]
+Metrics --> Alarm[CloudWatch Alarm<br>CPU Utilization > 70%]
+Alarm --> SNS[SNS Topic<br>cloud-monitoring-alerts]
+SNS --> Alert[Monitoring Alert Triggered]
+```
+
+**Key components**
+
+* Terraform Infrastructure as Code deployment
+* Amazon EC2 instance running Amazon Linux 2023
+* CloudWatch metric monitoring for CPU utilization
+* CloudWatch alarm triggering at **70% CPU usage**
+* Amazon SNS topic for alert notifications
+* Modular Terraform structure using a monitoring module
+
+This project demonstrates **automated infrastructure monitoring and alerting using Terraform and AWS observability services**.
+
 ## Author
 
 **Xavier Simpson**
