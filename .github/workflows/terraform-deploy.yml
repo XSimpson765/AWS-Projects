@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "Choose terraform action"
+        description: "Choose Terraform action"
         required: true
         default: "plan"
         type: choice
@@ -46,7 +46,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -out=tfplan
 
   terraform-apply:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
@@ -71,8 +71,5 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate
-
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve tfplan
