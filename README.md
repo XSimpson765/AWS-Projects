@@ -6,6 +6,36 @@ The goal of these projects is to demonstrate real-world **cloud engineering prac
 
 ---
 
+AWS Cloud Engineering Portfolio
+
+Production-style AWS infrastructure projects demonstrating Terraform, VPC networking,
+CI/CD pipelines, monitoring, and scalable application architectures.
+
+Projects included in this repository:
+
+1. Secure Web Baseline
+   - EC2 + security groups + IAM hardening
+
+2. Terraform Remote Backend
+   - S3 + DynamoDB state locking
+
+3. Production Web Platform
+   - VPC + ALB + EC2 architecture
+
+4. Cloud Operations Platform
+   - Infrastructure automation and operations tooling
+
+5. Cloud Monitoring
+   - CloudWatch alarms and metrics monitoring
+
+6. CI/CD Platform
+   - Docker + GitHub Actions + ECR + EKS
+
+7. 3-Tier Application Architecture
+   - ALB + Auto Scaling + RDS deployed with Terraform
+
+---
+
 ## Projects
 
 ### 1. Secure Web Baseline
