@@ -33,3 +33,11 @@ output "alb_dns_name" {
 output "target_group_arn" {
   value = aws_lb_target_group.app_tg.arn
 }
+
+output "rds_endpoint" {
+  value = aws_db_instance.app_db.endpoint
+}
+
+output "rds_db_name" {
+  value = aws_db_instance.app_db.db_name
+}
