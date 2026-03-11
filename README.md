@@ -6,7 +6,7 @@ The goal of these projects is to demonstrate real-world **cloud engineering prac
 
 ---
 
-AWS Cloud Engineering Portfolio
+## AWS Cloud Engineering Portfolio
 
 Production-style AWS infrastructure projects demonstrating Terraform, VPC networking,
 CI/CD pipelines, monitoring, and scalable application architectures.
