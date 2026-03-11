@@ -149,6 +149,100 @@ Key components
 • Automated Terraform plan and apply workflow  
 • AWS infrastructure deployment automation
 
+### 7. Terraform VPC 3-Tier Application Architecture
+
+**Directory:** `project-07-vpc-app-architecture`
+
+This project demonstrates a production-style AWS **three-tier application architecture** fully defined using **Terraform Infrastructure as Code**.
+
+The infrastructure provisions a custom VPC, networking layers, load balancing, auto scaling compute, and a managed database tier.
+
+---
+
+### Architecture Overview
+
+```
+Internet
+   │
+   ▼
+Application Load Balancer
+   │
+   ▼
+Auto Scaling Group (EC2 instances)
+   │
+   ▼
+Amazon RDS MySQL
+```
+
+The environment is deployed inside a custom **VPC with multi-AZ subnet segmentation** to separate public access, application compute, and database resources.
+
+---
+
+### Core Infrastructure Components
+
+* **Custom VPC**
+* **2 Public Subnets**
+* **2 Private Application Subnets**
+* **2 Private Database Subnets**
+* **Internet Gateway**
+* **Route Tables**
+* **Security Groups**
+* **Application Load Balancer (ALB)**
+* **Target Group & Listener**
+* **EC2 Launch Template**
+* **Auto Scaling Group**
+* **Amazon RDS MySQL**
+
+---
+
+### Security Design
+
+Network access is tightly controlled through security groups:
+
+| Layer         | Access                                       |
+| ------------- | -------------------------------------------- |
+| ALB           | Accepts HTTP traffic from the internet       |
+| EC2 Instances | Accept HTTP only from the ALB security group |
+| RDS Database  | Accept MySQL traffic only from EC2 instances |
+
+The **database tier is deployed in private subnets**, preventing direct internet access.
+
+---
+
+### Terraform Concepts Demonstrated
+
+* Infrastructure as Code
+* Modular cloud architecture
+* AWS VPC networking
+* Load balancing
+* Auto scaling compute infrastructure
+* Managed database provisioning
+* Secure security group design
+* Environment outputs and variable configuration
+
+---
+
+### Technologies Used
+
+* Terraform
+* AWS VPC
+* AWS Subnets
+* AWS Route Tables
+* AWS Security Groups
+* AWS Application Load Balancer
+* AWS EC2
+* AWS Auto Scaling
+* AWS RDS (MySQL)
+
+---
+
+### Status
+
+Terraform infrastructure architecture complete.
+Application bootstrap and health-check debugging were explored as part of infrastructure troubleshooting during development.
+
+---
+
 ## Author
 
 **Xavier Simpson**
