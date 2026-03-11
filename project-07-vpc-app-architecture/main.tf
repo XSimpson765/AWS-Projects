@@ -233,10 +233,10 @@ resource "aws_launch_template" "app_lt" {
 }
 
 resource "aws_autoscaling_group" "app_asg" {
-  name                = "p7-app-asg"
-  desired_capacity    = 2
-  min_size            = 2
-  max_size            = 2
+  name             = "p7-app-asg"
+  desired_capacity = 2
+  min_size         = 2
+  max_size         = 2
 
   vpc_zone_identifier = [
     aws_subnet.public_1.id,
